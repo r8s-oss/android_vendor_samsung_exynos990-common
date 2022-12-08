@@ -426,6 +426,15 @@
         <ctl name="ABOX NSRC0" value="SIFS4" />
     </path>
 
+    <path name="route-sifs5-to-nsrc2">
+        <ctl name="ABOX NSRC2" value="SIFS5" />
+    </path>
+
+    <path name="route-rdma8-to-sifs5">
+        <ctl name="ABOX SPUS OUT8" value="SIFS5" />
+        <ctl name="ABOX SIFS5" value="SPUS OUT8" />
+    </path>
+
     <!-- RDMA to SIFS routing paths -->
     <path name="route-rdma3-to-sifs0">
         <ctl name="ABOX SPUS OUT3" value="SIFS0" />
@@ -1245,6 +1254,20 @@
         <ctl name="ABOX WDMA1 Channel" value="2" />
         <ctl name="ABOX WDMA1 Rate" value="48000" />
         <ctl name="ABOX WDMA1 Period" value="240" />
+    </path>
+
+    <path name="set-wdma2-48k-16bit-2ch-pdsz20ms-config">
+        <ctl name="ABOX WDMA2 Width" value="16" />
+        <ctl name="ABOX WDMA2 Channel" value="2" />
+        <ctl name="ABOX WDMA2 Rate" value="48000" />
+        <ctl name="ABOX WDMA2 Period" value="960" />
+    </path>
+
+    <path name="set-wdma2-32k-16bit-2ch-pdsz20ms-config">
+        <ctl name="ABOX WDMA2 Width" value="16" />
+        <ctl name="ABOX WDMA2 Channel" value="2" />
+        <ctl name="ABOX WDMA2 Rate" value="32000" />
+        <ctl name="ABOX WDMA2 Period" value="640" />
     </path>
 
     <path name="route-call-spkrcv-refdata-vssadapter_b">
@@ -3766,9 +3789,28 @@
         <ctl name="ABOX VSSIF_TX_A" value="VSS_TXADAPTER" />
     </path>
 
+    <path name="route-teletx-rdma8-sifs5-wdma2">
+        <path name="route-sifs5-to-nsrc2" />
+        <path name="route-nsrc2-to-wdma2" />
+        <path name="route-rdma8-to-sifs5" />
+        <ctl name="ABOX VSSIF_TX_B" value="WDMA2" />
+        <ctl name="ABOX FWD_OUT_A" value="WDMA2" />
+    </path>
+
+    <path name="route-teletx-rdma8-sifs5-32k-wdma2">
+        <path name="set-wdma2-32k-16bit-2ch-pdsz20ms-config" />
+        <path name="route-teletx-rdma8-sifs5-wdma2" />
+    </path>
+
+    <path name="route-teletx-rdma8-sifs5-48k-wdma2">
+        <path name="set-wdma2-48k-16bit-2ch-pdsz20ms-config" />
+        <path name="route-teletx-rdma8-sifs5-wdma2" />
+    </path>
+
     <path name="route-seriallif-cpcall-mic">
         <path name="set-call-seriallif-wdma4-16bit-config" />
         <path name="route-seriallif-uaif6-to-wdma4" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <path name="route-wdma4-to-tdmdemux4" />
         <!-- primary stream node -->
         <path name="route-txse2-to-vpcmindai0" />
@@ -3777,6 +3819,7 @@
     <path name="route-seriallif-cpcall-dual-mic">
         <path name="set-call-seriallif-wdma4-16bit-config" />
         <path name="route-seriallif-uaif6-to-wdma4" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <path name="route-wdma4-to-tdmdemux4" />
         <path name="route-wdma4-to-tdmdemux0" />
         <!-- primary stream node -->
@@ -3786,6 +3829,7 @@
     <path name="route-seriallif-cpcall-dual-invert-mic">
         <path name="set-call-seriallif-wdma4-16bit-config" />
         <path name="route-seriallif-uaif6-to-wdma4" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <path name="route-wdma4-to-tdmdemux5" />
         <path name="route-wdma4-to-tdmdemux0" />
         <!-- primary stream node -->
@@ -3795,6 +3839,7 @@
     <path name="route-seriallif-cpcall-multi-mic">
         <path name="set-call-seriallif-wdma4-16bit-config" />
         <path name="route-seriallif-uaif6-to-wdma4" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <path name="route-wdma4-to-tdmdemux3" />
         <path name="route-wdma4-to-tdmdemux0" />
         <!-- primary stream node -->
@@ -3804,6 +3849,7 @@
     <path name="route-btsco-cpcall-mic">
         <path name="route-btsco-record-uaif3-wdma4" />
         <path name="set-call-btsco-wdma4-16bit-config" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <!-- primary stream node -->
         <path name="route-wdma4-to-vpcmindai0" />
     </path>
@@ -3811,6 +3857,7 @@
     <path name="route-usb-cpcall-mic">
         <!-- primary stream node -->
         <path name="route-usbincom-to-vpcmindai0" />
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <!-- vpcmdai3 routing for CP Tx trigger -->
         <path name="route-usbincom-to-vpcmdai3" />
     </path>
@@ -3890,6 +3937,7 @@
 
     <path name="route-loop-usb-cpcall-mic">
         <!-- primary stream node -->
+        <path name="route-teletx-rdma8-sifs5-32k-wdma2" />
         <path name="route-wdma4-to-vpcmindai0" />
     </path>
 
