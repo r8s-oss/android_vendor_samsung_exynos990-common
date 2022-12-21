@@ -217,6 +217,7 @@ PRODUCT_PACKAGES += \
     libsecure_storage \
     libsemnativecarrierfeature \
     libsensorlistener \
+    libspatializerparamstorage \
     libstagefrighthw \
     libsynaFpSensorTestNwd \
     libteecl \
@@ -275,6 +276,8 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@2.1-impl \
     gps.default \
     vendor.samsung.hardware.gnss@2.1-impl \
+    libSemDataProps \
+    libSemTelephonyProps \
     libcommon \
     libcrane_compiler \
     libeden_wrapper \
